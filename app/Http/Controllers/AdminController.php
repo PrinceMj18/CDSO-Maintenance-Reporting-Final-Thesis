@@ -264,23 +264,29 @@ private function formatDashboardDateRange($period, $start, $end)
 
     return $start->format('F j, Y') . ' – ' . $end->format('F j, Y');
 }
-    private function buildDashboardTrend(string $period, $baseQuery, Carbon $now): array
-    {
-        if ($period === 'overall' || $period === 'decade') {
-            $rows = (clone $baseQuery)
-                ->select(DB::raw('EXTRACT(YEAR FROM DATE(created_at) as period'), DB::raw('COUNT(*) as total'))
-                ->groupBy(DB::raw('EXTRACT(YEAR FROM DATE(created_at)'))->orderBy('period')
-                ->pluck('total', 'period');
+    
+private function buildDashboardTrend(string $period, $baseQuery, Carbon $now): array
+{
+    if ($period === 'overall' || $period === 'decade') {
+        $rows = (clone $baseQuery)
+            ->select(
+                DB::raw('EXTRACT(YEAR FROM created_at) as period'),
+                DB::raw('COUNT(*) as total')
+            )
+            ->groupBy(DB::raw('EXTRACT(YEAR FROM created_at)'))
+            ->orderBy('period')
+            ->pluck('total', 'period');
 
-            $years = $period === 'decade'
-                ? range($now->year - 9, $now->year)
-                : $rows->keys()->map(fn ($year) => (int) $year)->values()->all();
+        $years = $period === 'decade'
+            ? range($now->year - 9, $now->year)
+            : $rows->keys()->map(fn ($year) => (int) $year)->values()->all();
 
-            $labels = collect($years)->map(fn ($year) => (string) $year)->values();
-            $data = collect($years)->map(fn ($year) => (int) $rows->get($year, 0))->values();
+        $labels = collect($years)->map(fn ($year) => (string) $year)->values();
+        $data = collect($years)->map(fn ($year) => (int) $rows->get($year, 0))->values();
 
-            return [$labels, $data];
-        }
+        return [$labels, $data];
+    }
+
 
         if ($period === 'daily') {
             $rows = (clone $baseQuery)
