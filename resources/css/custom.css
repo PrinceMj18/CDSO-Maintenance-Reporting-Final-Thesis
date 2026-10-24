@@ -1,0 +1,12 @@
+/* custom.css */
+
+/* Dark mode styles for role select */
+#role {
+    background-color: #1f2937 !important; /* Tailwind bg-gray-800 */
+    color: #fff !important;               /* text-white */
+}
+
+#role option {
+    background-color: #1f2937 !important; /* dark background for options */
+    color: #fff !important;               /* white text */
+}
