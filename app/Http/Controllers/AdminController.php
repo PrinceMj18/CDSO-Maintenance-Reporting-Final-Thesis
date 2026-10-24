@@ -40,7 +40,7 @@ class AdminController extends Controller
 
     //     $today = now()->toDateString();
 
-    //     $dailyRequests = MaintenanceRequest::whereDate('created_at', $today);
+    //     $dailyRequests = MaintenanceRequest::whereDate('DATE(created_at', $today);
 
     //     $dailyTotal = (clone $dailyRequests)->count();
 
@@ -150,7 +150,7 @@ class AdminController extends Controller
         $baseQuery = MaintenanceRequest::query();
 
         if ($start && $end) {
-            $baseQuery->whereBetween('created_at', [$start, $end]);
+            $baseQuery->whereBetween('DATE(created_at', [$start, $end]);
         }
 
         // Aggregate all status totals in one database query instead of issuing
@@ -268,8 +268,8 @@ private function formatDashboardDateRange($period, $start, $end)
     {
         if ($period === 'overall' || $period === 'decade') {
             $rows = (clone $baseQuery)
-                ->select(DB::raw('EXTRACT(YEAR FROM created_at) as period'), DB::raw('COUNT(*) as total'))
-                ->groupBy(DB::raw('EXTRACT(YEAR FROM created_at)'))->orderBy('period')
+                ->select(DB::raw('EXTRACT(YEAR FROM DATE(created_at) as period'), DB::raw('COUNT(*) as total'))
+                ->groupBy(DB::raw('EXTRACT(YEAR FROM DATE(created_at)'))->orderBy('period')
                 ->pluck('total', 'period');
 
             $years = $period === 'decade'
@@ -284,8 +284,8 @@ private function formatDashboardDateRange($period, $start, $end)
 
         if ($period === 'daily') {
             $rows = (clone $baseQuery)
-                ->select(DB::raw('EXTRACT(HOUR FROM created_at) as period'), DB::raw('COUNT(*) as total'))
-                ->groupBy(DB::raw('EXTRACT(HOUR FROM created_at)'))->pluck('total', 'period');
+                ->select(DB::raw('EXTRACT(HOUR FROM DATE(created_at) as period'), DB::raw('COUNT(*) as total'))
+                ->groupBy(DB::raw('EXTRACT(HOUR FROM DATE(created_at)'))->pluck('total', 'period');
 
             return [
                 collect(range(0, 23))->map(fn ($hour) => Carbon::createFromTime($hour)->format('g A'))->values(),
@@ -296,8 +296,8 @@ private function formatDashboardDateRange($period, $start, $end)
         if ($period === 'weekly') {
             $start = $now->copy()->startOfWeek();
             $rows = (clone $baseQuery)
-                ->select(DB::raw('DATE(created_at) as period'), DB::raw('COUNT(*) as total'))
-                ->groupBy(DB::raw('DATE(created_at)'))->pluck('total', 'period');
+                ->select(DB::raw('DATE(DATE(created_at) as period'), DB::raw('COUNT(*) as total'))
+                ->groupBy(DB::raw('DATE(DATE(created_at)'))->pluck('total', 'period');
 
             return [
                 collect(range(0, 6))->map(fn ($day) => $start->copy()->addDays($day)->format('D, M d'))->values(),
@@ -309,8 +309,8 @@ private function formatDashboardDateRange($period, $start, $end)
 
         if ($period === 'monthly') {
             $rows = (clone $baseQuery)
-                ->select(DB::raw('EXTRACT(DAY FROM created_at) as period'), DB::raw('COUNT(*) as total'))
-                ->groupBy(DB::raw('EXTRACT(DAY FROM created_at)'))->pluck('total', 'period');
+                ->select(DB::raw('EXTRACT(DAY FROM DATE(created_at) as period'), DB::raw('COUNT(*) as total'))
+                ->groupBy(DB::raw('EXTRACT(DAY FROM DATE(DATE(created_at)'))->pluck('total', 'period');
 
             return [
                 collect(range(1, $now->daysInMonth))->map(fn ($day) => $now->copy()->day($day)->format('M d'))->values(),
@@ -323,8 +323,8 @@ private function formatDashboardDateRange($period, $start, $end)
             $quarterStart = $now->copy()->month($quarterStartMonth)->startOfMonth();
 
             $rows = (clone $baseQuery)
-                ->select(DB::raw('EXTRACT(MONTH FROM created_at) as period'), DB::raw('COUNT(*) as total'))
-                ->groupBy(DB::raw('EXTRACT(MONTH FROM created_at)'))->pluck('total', 'period');
+                ->select(DB::raw('EXTRACT(MONTH FROM DATE(created_at) as period'), DB::raw('COUNT(*) as total'))
+                ->groupBy(DB::raw('EXTRACT(MONTH FROM DATE(created_at)'))->pluck('total', 'period');
 
             return [
                 collect(range(0, 2))->map(fn ($month) => $quarterStart->copy()->addMonths($month)->format('M Y'))->values(),
@@ -334,8 +334,8 @@ private function formatDashboardDateRange($period, $start, $end)
 
         // yearly
         $rows = (clone $baseQuery)
-            ->select(DB::raw('EXTRACT(MONTH FROM created_at) as period'), DB::raw('COUNT(*) as total'))
-            ->groupBy(DB::raw('EXTRACT(MONTH FROM created_at)'))->pluck('total', 'period');
+            ->select(DB::raw('EXTRACT(MONTH FROM DATE(created_at) as period'), DB::raw('COUNT(*) as total'))
+            ->groupBy(DB::raw('EXTRACT(MONTH FROM DATE(created_at)'))->pluck('total', 'period');
 
         return [
             collect(range(1, 12))->map(fn ($month) => Carbon::create()->month($month)->format('M'))->values(),
