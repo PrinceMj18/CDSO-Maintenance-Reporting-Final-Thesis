@@ -85,65 +85,7 @@
 
 
         <!-- SUPER ADMIN -->
-        <div class="relative overflow-hidden
-                    p-5 bg-white
-                    border border-gray-200
-                    rounded-xl shadow-sm
-                    dark:bg-gray-800 dark:border-gray-700
-                    transition-all duration-200
-                    hover:shadow-md">
-
-            <div class="absolute top-0 left-0 w-full h-1 bg-purple-500"></div>
-
-            <div class="flex items-start justify-between">
-
-                <div class="flex items-center justify-center
-                            w-11 h-11
-                            text-purple-600
-                            bg-purple-50
-                            rounded-xl
-                            dark:bg-purple-900/20
-                            dark:text-purple-300">
-
-                    <svg class="w-5 h-5"
-                         fill="none"
-                         stroke="currentColor"
-                         stroke-width="2"
-                         viewBox="0 0 24 24">
-
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M12 3l2.09 4.26L19 8l-3.5 3.41L16.18 16 12 13.77 7.82 16l.68-4.59L5 8l4.91-.74L12 3z">
-                        </path>
-
-                    </svg>
-
-                </div>
-
-                <span class="text-xs font-medium text-gray-400 dark:text-gray-500">
-                    Privileged
-                </span>
-
-            </div>
-
-            <div class="mt-5">
-
-                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Super Admin
-                </p>
-
-                <p class="mt-1 text-2xl font-bold text-gray-800 dark:text-white">
-                    {{ $supe_admin ?? 0 }}
-                </p>
-
-                <p class="mt-1 text-xs text-gray-400 dark:text-gray-500">
-                    Highest-level accounts
-                </p>
-
-            </div>
-
-        </div>
-
+        
 
         <!-- ADMIN -->
         <div class="relative overflow-hidden

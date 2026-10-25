@@ -2,24 +2,24 @@
 
 @section('content')
 
-    <div class="container w-full max-w-full min-w-0 px-3 py-5 mx-auto overflow-x-hidden sm:px-4 lg:px-5">
+    <div class="container mx-auto w-full min-w-0 max-w-full overflow-x-hidden px-3 py-5 sm:px-5 lg:px-8 lg:py-8">
 
         <!-- HEADER -->
         <div class="flex flex-col gap-3 mb-6 lg:flex-row lg:items-center lg:justify-between">
 
             <div>
 
-                <h1 class="text-xl font-bold text-gray-800 sm:text-2xl lg:text-3xl dark:text-white">
+                <h1 class="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl lg:text-3xl dark:text-white">
                     {{ ucfirst(str_replace('_', ' ', $status ?? 'all')) }} Requests
                 </h1>
 
-                <p class="mt-1 text-xs text-gray-500 sm:text-sm dark:text-gray-400">
+                <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
                     Track and monitor your submitted maintenance requests.
                 </p>
             </div>
 
             <a href="{{ route('userDashboard') }}"
-                class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white transition rounded-xl bg-gray-800 hover:bg-gray-900">
+                class="inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#607844]/30 sm:w-auto dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700">
 
                 Back to Dashboard
             </a>
@@ -45,9 +45,9 @@
     }
 @endphp
 
-<div class="mb-5">
+<div class="mb-6 rounded-xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4 dark:border-gray-700 dark:bg-gray-800">
     <label for="request-status-mobile"
-        class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300 sm:hidden">
+        class="mb-2 block text-xs font-semibold uppercase tracking-wide text-slate-500 sm:hidden dark:text-gray-400">
         Filter requests
     </label>
 
@@ -63,10 +63,7 @@
         <select id="request-status-mobile"
             name="status"
             onchange="this.form.submit()"
-            class="block w-full rounded-lg border border-gray-300 bg-white
-                   px-3 py-3 text-sm text-gray-800 shadow-sm
-                   focus:border-gray-500 focus:ring-2 focus:ring-gray-200
-                   dark:border-gray-600 dark:bg-gray-800 dark:text-white">
+            class="block min-h-11 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-3 text-sm text-slate-800 shadow-sm focus:border-[#607844] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#607844]/20 dark:border-gray-600 dark:bg-gray-900 dark:text-white">
 
             @foreach($filters as $key => $label)
                 <option value="{{ $key }}"
@@ -94,8 +91,8 @@
                 class="inline-flex items-center rounded-lg border px-3 py-2
                        text-sm font-medium transition
                        {{ $currentStatus === $key
-                            ? 'border-gray-800 bg-gray-800 text-white dark:border-gray-200 dark:bg-gray-200 dark:text-gray-900'
-                            : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700' }}">
+                            ? 'border-[#607844] bg-[#607844] text-white shadow-sm dark:border-[#607844] dark:bg-[#607844] dark:text-white'
+                            : 'border-slate-200 bg-white text-slate-600 hover:border-[#607844]/40 hover:bg-[#607844]/5 hover:text-[#52693a] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700' }}">
                 {{ $label }}
             </a>
         @endforeach
@@ -104,16 +101,16 @@
 </div>
 
         <!-- SEARCH & FILTERS -->
-        <form method="GET" action="{{ route('trackReq') }}" class="mb-6">
+        <form method="GET" action="{{ route('trackReq') }}" class="mb-6 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5 dark:border-gray-700 dark:bg-gray-800">
 
             <!-- Keep current status -->
             <input type="hidden" name="status" value="{{ $status ?? 'all' }}">
 
-            <div class="flex flex-col gap-3 sm:flex-row">
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_13rem_auto_auto] lg:items-end">
 
                 <!-- Search -->
                 <div class="flex-1">
-                    <label class="block mb-1 text-xs font-medium text-gray-500 dark:text-gray-400">
+                    <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-gray-400">
                         Search
                     </label>
 
@@ -121,7 +118,7 @@
 
                         <input type="text" name="search" value="{{ request('search') }}"
                             placeholder="Search ticket number, title, description, or location..." class="w-full px-4 py-2.5 pl-10 text-sm bg-white border border-gray-200 rounded-xl
-                                       focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200
+                                       focus:border-[#607844] focus:ring-2 focus:ring-[#607844]/20
                                        dark:bg-gray-800 dark:border-gray-700 dark:text-white
                                        dark:placeholder-gray-500">
 
@@ -139,15 +136,13 @@
 
 
                 <!-- Category -->
-                <div class="sm:w-56">
+                <div class="min-w-0">
 
-                    <label class="block mb-1 text-xs font-medium text-gray-500 dark:text-gray-400">
+                    <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-gray-400">
                         Category
                     </label>
 
-                    <select name="category" class="w-full px-4 py-2.5 text-sm bg-white border border-gray-200 rounded-xl
-                                   focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200
-                                   dark:bg-gray-800 dark:border-gray-700 dark:text-white">
+                    <select name="category" class="min-h-11 w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 focus:border-[#607844] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#607844]/20 dark:border-gray-700 dark:bg-gray-900 dark:text-white">
 
                         <option value="">All Categories</option>
 
@@ -169,9 +164,7 @@
                 <!-- Search Button -->
                 <div class="flex items-end">
 
-                    <button type="submit" class="w-full px-5 py-2.5 text-sm font-medium text-white
-                                   bg-indigo-600 rounded-xl hover:bg-indigo-700
-                                   sm:w-auto">
+                    <button type="submit" class="min-h-11 w-full rounded-lg bg-[#607844] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#52693a] focus:outline-none focus:ring-2 focus:ring-[#607844]/30 sm:w-auto">
 
                         Search
 
@@ -183,10 +176,7 @@
                 <!-- Reset -->
                 <div class="flex items-end">
 
-                    <a href="{{ route('trackReq', ['status' => $status ?? 'all']) }}" class="w-full px-5 py-2.5 text-sm font-medium text-gray-700
-                                   bg-gray-100 rounded-xl hover:bg-gray-200
-                                   dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600
-                                   sm:w-auto text-center">
+                    <a href="{{ route('trackReq', ['status' => $status ?? 'all']) }}" class="inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-slate-200 bg-slate-50 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 sm:w-auto dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
 
                         Reset
 
@@ -197,17 +187,84 @@
             </div>
 
         </form>
-        <!-- TABLE -->
-        <div
-            class="w-full overflow-hidden bg-white border border-gray-100 shadow-sm rounded-2xl dark:border-gray-700 dark:bg-gray-800">
+
+        <!-- MOBILE REQUEST CARDS -->
+        <div class="space-y-3 sm:hidden">
+            @forelse($requests as $request)
+                @php
+                    $mobilePriorityColors = [
+                        'low' => 'bg-emerald-50 text-emerald-700 ring-emerald-600/20',
+                        'medium' => 'bg-amber-50 text-amber-700 ring-amber-600/20',
+                        'high' => 'bg-rose-50 text-rose-700 ring-rose-600/20',
+                    ];
+                    $mobileStatusColors = [
+                        'pending' => 'bg-orange-50 text-orange-700 ring-orange-600/20',
+                        'approved' => 'bg-amber-50 text-amber-700 ring-amber-600/20',
+                        'in_progress' => 'bg-blue-50 text-blue-700 ring-blue-600/20',
+                        'completed' => 'bg-emerald-50 text-emerald-700 ring-emerald-600/20',
+                        'rejected' => 'bg-rose-50 text-rose-700 ring-rose-600/20',
+                    ];
+                @endphp
+                <article class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                    <div class="border-b border-slate-100 px-4 py-3 dark:border-gray-700">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                                <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-gray-400">Ticket number</p>
+                                <p class="mt-1 break-words text-sm font-bold text-[#52693a] dark:text-emerald-300">{{ $request->ticket_number ?? 'Not assigned' }}</p>
+                            </div>
+                            <span class="inline-flex shrink-0 items-center rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ring-inset {{ $mobileStatusColors[$request->status] ?? 'bg-slate-100 text-slate-700 ring-slate-500/20' }}">
+                                {{ ucfirst(str_replace('_', ' ', $request->status)) }}
+                            </span>
+                        </div>
+                        <h2 class="mt-3 break-words text-base font-semibold leading-snug text-slate-900 dark:text-white">{{ $request->title }}</h2>
+                        <p class="mt-1 break-words text-sm leading-relaxed text-slate-500 dark:text-gray-400">{{ $request->description }}</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-3 px-4 py-3">
+                        <div class="min-w-0">
+                            <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-gray-400">Category</p>
+                            <p class="mt-1 break-words text-sm font-medium text-slate-800 dark:text-gray-200">{{ ucfirst($request->category) }}</p>
+                        </div>
+                        <div class="min-w-0">
+                            <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-gray-400">Priority</p>
+                            <span class="mt-1 inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset {{ $mobilePriorityColors[$request->priority] ?? 'bg-slate-100 text-slate-700 ring-slate-500/20' }}">{{ ucfirst($request->priority) }}</span>
+                        </div>
+                        <div class="col-span-2 min-w-0">
+                            <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-gray-400">Location</p>
+                            <p class="mt-1 break-words text-sm text-slate-700 dark:text-gray-300">{{ $request->location }}</p>
+                        </div>
+                        <div class="col-span-2 min-w-0">
+                            <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-gray-400">Submitted</p>
+                            <p class="mt-1 text-sm text-slate-700 dark:text-gray-300">{{ $request->created_at->format('M d, Y') }}</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-slate-100 bg-slate-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-900/40">
+                        <a href="{{ route('viewRequest.user', $request->id) }}" class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#607844] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#52693a] focus:outline-none focus:ring-2 focus:ring-[#607844]/30 focus:ring-offset-2">
+                            View request updates
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                        </a>
+                    </div>
+                </article>
+            @empty
+                <div class="rounded-xl border border-dashed border-slate-300 bg-white px-5 py-10 text-center dark:border-gray-700 dark:bg-gray-800">
+                    <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#607844]/10 text-[#607844]">
+                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2Z"/></svg>
+                    </div>
+                    <h3 class="mt-3 text-sm font-semibold text-slate-900 dark:text-white">No requests found</h3>
+                    <p class="mt-1 text-sm text-slate-500 dark:text-gray-400">Try another status or adjust your search filters.</p>
+                </div>
+            @endforelse
+        </div>
+
+        <!-- DESKTOP REQUEST TABLE -->
+        <div class="hidden w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:block">
 
             <div class="w-full overflow-x-auto">
-                <table class="w-full min-w-[700px]">
+                <table class="w-full min-w-[900px]">
 
-                    <thead class="bg-gray-50 dark:bg-gray-700">
+                    <thead class="bg-slate-50 dark:bg-gray-700">
 
                         <tr
-                            class="text-[11px] font-semibold tracking-wider text-left text-gray-500 uppercase dark:text-gray-400">
+                            class="text-left text-[11px] font-semibold tracking-wider text-slate-500 uppercase dark:text-gray-400">
                             <th class="px-4 py-3">Ticket No.</th>
                             <th class="px-4 py-3">Request</th>
                             <th class="px-4 py-3">Category</th>
@@ -215,6 +272,7 @@
                             <th class="px-4 py-3">Location</th>
                             <th class="px-4 py-3">Status</th>
                             <th class="px-4 py-3">Date</th>
+                            <th class="px-4 py-3 text-right">Action</th>
                         </tr>
                     </thead>
 
@@ -238,12 +296,12 @@
                                                 ];
                                             @endphp
 
-                                            <tr class="transition hover:bg-gray-50 dark:hover:bg-gray-700/40">
+                                            <tr class="transition-colors hover:bg-[#607844]/5 dark:hover:bg-gray-700/40">
                                                 <!-- TICKET NUMBER -->
                                                 <td class="px-3 py-4 whitespace-nowrap">
 
                                                     <span class="inline-flex items-center w-fit max-w-full px-2 py-1 text-xs font-semibold
-                               text-indigo-700 bg-indigo-100 rounded-md
+                               text-[#52693a] bg-[#607844]/10 rounded-md
                                dark:bg-indigo-900/40 dark:text-indigo-300">
 
                                                         {{ $request->ticket_number ?? 'Not assigned' }}
@@ -252,7 +310,7 @@
 
                                                 </td>
                                                 <!-- REQUEST -->
-                                                <td class="inline-flex w-fit max-w-full px-2.5 py-1">
+                                                <td class="px-4 py-4">
 
                                                     <div class="max-w-[220px]">
 
@@ -305,7 +363,7 @@
                                                 <!-- VIEW -->
                                                 <td class="px-4 py-4 text-right whitespace-nowrap">
                                                     <a href="{{ route('viewRequest.user', $request->id) }}"
-                                                        class="inline-flex w-fit max-w-full px-2.5 py-1 rounded-lg bg-gray-900 text-white text-xs font-semibold hover:bg-indigo-700">
+                                                        class="inline-flex min-h-9 w-fit max-w-full items-center rounded-lg bg-[#607844] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-[#52693a] focus:outline-none focus:ring-2 focus:ring-[#607844]/30">
                                                         View updates
                                                     </a>
                                                 </td>
@@ -361,9 +419,7 @@
                 ->values();
         @endphp
 
-        <div class="flex flex-col gap-4 mt-4 border border-gray-100 rounded-xl
-                bg-white px-4 py-4 dark:border-gray-700 dark:bg-gray-800
-                sm:flex-row sm:items-center sm:justify-between">
+        <div class="mt-4 flex flex-col gap-4 rounded-xl border border-slate-200 bg-white px-4 py-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:flex-row sm:items-center sm:justify-between">
 
             <!-- Showing X to Y of Z -->
             <p class="text-sm text-gray-500 dark:text-gray-400">

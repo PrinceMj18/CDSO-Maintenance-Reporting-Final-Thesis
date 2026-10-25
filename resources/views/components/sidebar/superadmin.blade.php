@@ -88,22 +88,54 @@
             </li>
 
 
-            <li class="relative px-6 py-3">
-                <a href="{{ route('superadmin.archives.accounts') }}" class="inline-flex w-full items-center text-sm font-semibold text-white/80 transition-colors hover:text-white">
-                    <svg class="h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 7h5l2 2h11v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/><path d="M12 12v5m-2.5-2.5h5"/>
-                    </svg>
-                    <span class="ml-4">Archived Accounts</span>
-                </a>
-            </li>
-            <li class="relative px-6 py-3">
-                <a href="{{ route('superadmin.accounts.create') }}" class="inline-flex w-full items-center text-sm font-semibold text-white/80 transition-colors hover:text-white">
-                    <svg class="h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M19 8v6m-3-3h6"/>
-                    </svg>
-                    <span class="ml-4">Create New Account</span>
-                </a>
-            </li>
+@php
+    $archiveActive = request()->routeIs('superadmin.archives.accounts*');
+@endphp
+
+<li class="relative px-6 py-3">
+    @if($archiveActive)
+        <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg bg-white"></span>
+    @endif
+
+    <a href="{{ route('superadmin.archives.accounts') }}"
+        class="inline-flex w-full items-center text-sm font-semibold transition-colors duration-150
+        {{ $archiveActive ? 'text-white' : 'text-white/80 hover:text-white' }}">
+
+        <svg class="h-5 w-5" aria-hidden="true" fill="none"
+            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 7h5l2 2h11v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/>
+            <path d="M12 12v5m-2.5-2.5h5"/>
+        </svg>
+
+        <span class="ml-4">Archived Accounts</span>
+    </a>
+</li>
+        <!-- create acc -->
+@php
+    $createAccountActive = request()->routeIs('superadmin.accounts.create');
+@endphp
+
+<li class="relative px-6 py-3">
+    @if($createAccountActive)
+        <span class="absolute inset-y-0 left-0 w-1 rounded-tr-lg rounded-br-lg bg-white"></span>
+    @endif
+
+    <a href="{{ route('superadmin.accounts.create') }}"
+        class="inline-flex w-full items-center text-sm font-semibold transition-colors duration-150
+        {{ $createAccountActive ? 'text-white' : 'text-white/80 hover:text-white' }}">
+
+        <svg class="h-5 w-5" aria-hidden="true" fill="none"
+            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="10" cy="7" r="4"/>
+            <path d="M19 8v6m-3-3h6"/>
+        </svg>
+
+        <span class="ml-4">Create New Account</span>
+    </a>
+</li>
 
             <!-- LOGOUT -->
             <li class="relative px-6 py-3">

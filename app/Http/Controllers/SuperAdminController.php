@@ -10,33 +10,47 @@ use Illuminate\Support\Facades\Hash;
 class SuperAdminController extends Controller
 {
     public function superadminDashboard()
-    {
-        $total = User::count();
+{
+    $total = User::count();
 
-        $supe_admin = User::whereHas('role', function($query){
-            $query->where('name', 'superadmin');
-        })->count();
+    $supe_admin = User::whereHas('role', function ($query) {
+        $query->where('name', 'superadmin');
+    })->count();
 
-        $admin = User::whereHas('role', function ($query) {
-            $query->where('name', 'admin');
-        })->count();
+    $total -= $supe_admin;
 
-        $personnel = User::whereHas('role', function($query){
-            $query->where('name', 'personnel');
-        })->count();
+    $admin = User::whereHas('role', function ($query) {
+        $query->where('name', 'admin');
+    })->count();
 
-        $user = User::whereHas('role', function($query){
-            $query->where('name', 'user');
-        })->count();
+    $personnel = User::whereHas('role', function ($query) {
+        $query->where('name', 'personnel');
+    })->count();
 
-        return view('pages.dashboard.index', compact('total', 'admin', 'personnel', 'user', 'supe_admin'));
-    }
+    $user = User::whereHas('role', function ($query) {
+        $query->where('name', 'user');
+    })->count();
+
+    return view('pages.dashboard.index', compact(
+        'total',
+        'admin',
+        'personnel',
+        'user',
+        'supe_admin'
+    ));
+}
 
     public function accManagement()
-    {
-        $users = User::with('role')->latest()->get();
-        return view('superadmin.accounts', compact('users'));
-    }
+{
+    $users = User::with('role')
+        ->whereHas('role', function ($query) {
+            $query->where('name', '!=', 'superadmin');
+        })
+        ->latest()
+        ->get();
+
+    return view('superadmin.accounts', compact('users'));
+}
 
     public function createAccount()
     {
